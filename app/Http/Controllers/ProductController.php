@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Product\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -35,15 +36,10 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Product $product)
     {
-        //
+        return  new ProductResource($product); // whu use new ProductResource() ? ans: because there is a only one product we will show and we make modifi our product information with new ProductResource()
     }
 
     /**

@@ -18,7 +18,7 @@ class ProductCollection extends Resource
             'name' => $this->name,
             'price' => $this->price,
             'discount' => $this->discount > 0 ? $this->discount : 'no discount',
-            'total_price' =>  round((1-0/100) * $this->price, 2),
+            'total_price' =>  round((1-$this->discount/100) * $this->price, 2),
             'href' => [
                 'detail' => route('products.show', $this->id)
             ]
