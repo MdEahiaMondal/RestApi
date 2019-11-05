@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReviewCreatedRequeste;
 use App\Http\Resources\Review\ReviewResource;
 use App\Product;
 use App\Review;
@@ -27,7 +28,7 @@ class ReviewController extends Controller
     }
 
 
-    public function store(Product $product, Request $request)
+    public function store(Product $product, ReviewCreatedRequeste $request)
     {
         $request['customer'] = $request->customer;
         $request['review'] = $request->body;
