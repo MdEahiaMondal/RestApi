@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductCreatedRequeste;
+use App\Http\Requests\ProductUpdateRequeste;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Product;
@@ -67,16 +68,20 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+
+
+    public function update(ProductUpdateRequeste $request, Product $product)
     {
-        //
+        $product->name = $request->name;
+        $product->detail = $request->description;
+        $product->price = $request->amount;
+        $product->stock = $request->stock;
+        $product->discount = $request->discount;
+        $product->save();
+
+        return response()->json([
+            'Updated' => "Product Updated successfully",
+        ],Response::HTTP_OK);
     }
 
     /**
