@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewCreatedRequeste;
+use App\Http\Requests\ReviewUpdatedRequeste;
 use App\Http\Resources\Review\ReviewResource;
 use App\Product;
 use App\Review;
@@ -64,16 +65,19 @@ class ReviewController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Review $review)
+
+
+
+    public function update(Product $product, ReviewUpdatedRequeste $request, Review $review)
     {
-        //
+        $request['customer'] = $request->customer;
+        $request['review'] = $request->body;
+        $request['star'] = $request->ratting;
+
+        $review->update( $request->all());
+        return response([
+            'updated' => new ReviewResource($review)
+        ]);
     }
 
     /**
