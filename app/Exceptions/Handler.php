@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
+
+    use ExceptionTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -28,44 +30,19 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Report or log an exception.
-     *
-     * @param  \Exception  $exception
-     * @return void
-     */
+
     public function report(Exception $exception)
     {
         parent::report($exception);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
+
     public function render($request, Exception $exception)
     {
 
         if ($request->expectsJson()){
-
-            if ($exception instanceof ModelNotFoundException){
-                return  response()->json([
-                    'error' => 'model not found'
-                ]);
-            }
-
-            if ($exception instanceof  NotFoundHttpException){
-                return  response()->json([
-                    'error' => 'Incurret url'
-                ]);
-            }
-
+           return $this->apiException($request, $exception);
         }
-
-
 
         return parent::render($request, $exception);
     }
