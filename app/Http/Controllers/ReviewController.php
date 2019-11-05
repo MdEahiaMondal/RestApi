@@ -6,6 +6,7 @@ use App\Http\Resources\Review\ReviewResource;
 use App\Product;
 use App\Review;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ReviewController extends Controller
 {
@@ -25,15 +26,19 @@ class ReviewController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(Product $product, Request $request)
     {
-        //
+        $request['customer'] = $request->customer;
+        $request['review'] = $request->body;
+        $request['star'] = $request->ratting;
+        $reviews = new Review($request->all());
+        $product->reviews()->save($reviews);
+
+        return response()->json([
+            'Created' => "Review Created successfully"
+        ], Response::HTTP_CREATED);
+
     }
 
     /**
