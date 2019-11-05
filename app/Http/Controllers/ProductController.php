@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductCreatedRequeste;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Product;
@@ -34,7 +35,7 @@ class ProductController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(ProductCreatedRequeste $request)
     {
         $product = new Product();
         $product->name = $request->name;
