@@ -15,7 +15,7 @@ trait ExceptionTrait{
         }
 
         if ($exception instanceof  NotFoundHttpException){
-           return $this->HttpErrorException();
+           return $this->HttpApiErrorException();
         }
 
         return parent::render($request, $exception);
@@ -30,7 +30,7 @@ trait ExceptionTrait{
         ]);
     }
 
-    protected function HttpErrorException()
+    protected function HttpApiErrorException()
     {
         return  response()->json([
             'error' => 'Incurret url'
