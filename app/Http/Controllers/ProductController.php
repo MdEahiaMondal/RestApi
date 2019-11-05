@@ -6,9 +6,16 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index', 'show');
+    }
 
     public function index()
     {
@@ -25,15 +32,21 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function store(Request $request)
     {
-        //
+        $product = new Product();
+        $product->name = $request->name;
+        $product->detail = $request->description;
+        $product->price = $request->amount;
+        $product->stock = $request->stock;
+        $product->discount = $request->discount;
+         $product->save();
+
+         return response()->json([
+             'Created' => "Product Created successfully",
+         ],Response::HTTP_CREATED);
     }
 
 
